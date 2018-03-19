@@ -39,9 +39,7 @@ static bool shell_cd(word_t *dir)
  */
 static int shell_exit(void)
 {
-	/* TODO execute exit/quit */
-
-	return 0; /* TODO replace with actual exit code */
+    return SHELL_EXIT;
 }
 
 /**
@@ -50,6 +48,9 @@ static int shell_exit(void)
  */
 static int parse_simple(simple_command_t *s, int level, command_t *father)
 {
+    if (strcmp(s->verb->string, "exit") == 0 || strcmp(s->verb->string, "quit") == 0) {
+        return shell_exit();
+    }
 	int status = -99, j, argc, reallocation_increment;
 	pid_t child_pid = fork();
 
@@ -123,14 +124,15 @@ static bool do_on_pipe(command_t *cmd1, command_t *cmd2, int level,
 int parse_command(command_t *c, int level, command_t *father)
 {
 	/* TODO sanity checks */
-
+	int ret;
 	if (c->op == OP_NONE) {
 		return parse_simple(c->scmd, 1, c);
 	}
 
 	switch (c->op) {
 	case OP_SEQUENTIAL:
-		/* TODO execute the commands one after the other */
+		parse_simple(c->cmd1->scmd, 1, c);
+		parse_simple(c->cmd2->scmd, 1, c);
 		break;
 
 	case OP_PARALLEL:
@@ -138,15 +140,15 @@ int parse_command(command_t *c, int level, command_t *father)
 		break;
 
 	case OP_CONDITIONAL_NZERO:
-		/* TODO execute the second command only if the first one
-		 * returns non zero
-		 */
+		if (parse_simple(c->cmd1->scmd, 1, c)) {
+			parse_simple(c->cmd2->scmd, 1, c);
+		}
 		break;
 
 	case OP_CONDITIONAL_ZERO:
-		/* TODO execute the second command only if the first one
-		 * returns zero
-		 */
+		if (parse_simple(c->cmd1->scmd, 1, c) == 0) {
+			parse_simple(c->cmd2->scmd, 1, c);
+		}
 		break;
 
 	case OP_PIPE:
