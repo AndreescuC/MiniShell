@@ -1,1 +1,0 @@
-/usr/bin/cc -g  -Wl,--enable-auto-import CMakeFiles/MiniShell.dir/src/main.c.o CMakeFiles/MiniShell.dir/src/Command/cmd.c.o CMakeFiles/MiniShell.dir/src/Parser/parser.tab.c.o CMakeFiles/MiniShell.dir/src/Parser/utils-lin.c.o CMakeFiles/MiniShell.dir/src/Parser/parser.yy.c.o  -o MiniShell.exe -Wl,--out-implib,libMiniShell.dll.a -Wl,--major-image-version,0,--minor-image-version,0 

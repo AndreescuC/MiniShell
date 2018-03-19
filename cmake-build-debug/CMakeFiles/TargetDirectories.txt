@@ -1,3 +1,0 @@
-/cygdrive/y/SO/Tema2/Tema2-Implementation/MiniShell/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/cygdrive/y/SO/Tema2/Tema2-Implementation/MiniShell/cmake-build-debug/CMakeFiles/edit_cache.dir
-/cygdrive/y/SO/Tema2/Tema2-Implementation/MiniShell/cmake-build-debug/CMakeFiles/MiniShell.dir
