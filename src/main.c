@@ -7,9 +7,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "parser.h"
-#include "cmd.h"
-#include "utils.h"
+#include "Parser/parser.h"
+#include "Parser/utils.h"
+#include "Command/cmd.h"
 
 #define PROMPT             "> "
 #define CHUNK_SIZE         1024

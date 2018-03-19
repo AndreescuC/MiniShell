@@ -74,13 +74,10 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/cygdrive/y/SO/Tema2/Tema2-Implementation/MiniShell/src/Parser/cmd.c">
+		<Unit filename="/cygdrive/y/SO/Tema2/Tema2-Implementation/MiniShell/src/Command/cmd.c">
 			<Option target="MiniShell"/>
 		</Unit>
-		<Unit filename="/cygdrive/y/SO/Tema2/Tema2-Implementation/MiniShell/src/Parser/cmd.h">
-			<Option target="MiniShell"/>
-		</Unit>
-		<Unit filename="/cygdrive/y/SO/Tema2/Tema2-Implementation/MiniShell/src/Parser/main.c">
+		<Unit filename="/cygdrive/y/SO/Tema2/Tema2-Implementation/MiniShell/src/Command/cmd.h">
 			<Option target="MiniShell"/>
 		</Unit>
 		<Unit filename="/cygdrive/y/SO/Tema2/Tema2-Implementation/MiniShell/src/Parser/parser.h">
@@ -102,6 +99,9 @@
 			<Option target="MiniShell"/>
 		</Unit>
 		<Unit filename="/cygdrive/y/SO/Tema2/Tema2-Implementation/MiniShell/src/Parser/utils.h">
+			<Option target="MiniShell"/>
+		</Unit>
+		<Unit filename="/cygdrive/y/SO/Tema2/Tema2-Implementation/MiniShell/src/main.c">
 			<Option target="MiniShell"/>
 		</Unit>
 		<Unit filename="/cygdrive/y/SO/Tema2/Tema2-Implementation/MiniShell/CMakeLists.txt">

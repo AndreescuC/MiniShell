@@ -5,7 +5,7 @@
 #ifndef _CMD_H
 #define _CMD_H
 
-#include "parser.h"
+#include "../Parser/parser.h"
 
 #define SHELL_EXIT -100
 

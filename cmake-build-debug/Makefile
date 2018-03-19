@@ -123,59 +123,32 @@ MiniShell/fast:
 	$(MAKE) -f CMakeFiles/MiniShell.dir/build.make CMakeFiles/MiniShell.dir/build
 .PHONY : MiniShell/fast
 
-src/Parser/cmd.o: src/Parser/cmd.c.o
+src/Command/cmd.o: src/Command/cmd.c.o
 
-.PHONY : src/Parser/cmd.o
-
-# target to build an object file
-src/Parser/cmd.c.o:
-	$(MAKE) -f CMakeFiles/MiniShell.dir/build.make CMakeFiles/MiniShell.dir/src/Parser/cmd.c.o
-.PHONY : src/Parser/cmd.c.o
-
-src/Parser/cmd.i: src/Parser/cmd.c.i
-
-.PHONY : src/Parser/cmd.i
-
-# target to preprocess a source file
-src/Parser/cmd.c.i:
-	$(MAKE) -f CMakeFiles/MiniShell.dir/build.make CMakeFiles/MiniShell.dir/src/Parser/cmd.c.i
-.PHONY : src/Parser/cmd.c.i
-
-src/Parser/cmd.s: src/Parser/cmd.c.s
-
-.PHONY : src/Parser/cmd.s
-
-# target to generate assembly for a file
-src/Parser/cmd.c.s:
-	$(MAKE) -f CMakeFiles/MiniShell.dir/build.make CMakeFiles/MiniShell.dir/src/Parser/cmd.c.s
-.PHONY : src/Parser/cmd.c.s
-
-src/Parser/main.o: src/Parser/main.c.o
-
-.PHONY : src/Parser/main.o
+.PHONY : src/Command/cmd.o
 
 # target to build an object file
-src/Parser/main.c.o:
-	$(MAKE) -f CMakeFiles/MiniShell.dir/build.make CMakeFiles/MiniShell.dir/src/Parser/main.c.o
-.PHONY : src/Parser/main.c.o
+src/Command/cmd.c.o:
+	$(MAKE) -f CMakeFiles/MiniShell.dir/build.make CMakeFiles/MiniShell.dir/src/Command/cmd.c.o
+.PHONY : src/Command/cmd.c.o
 
-src/Parser/main.i: src/Parser/main.c.i
+src/Command/cmd.i: src/Command/cmd.c.i
 
-.PHONY : src/Parser/main.i
+.PHONY : src/Command/cmd.i
 
 # target to preprocess a source file
-src/Parser/main.c.i:
-	$(MAKE) -f CMakeFiles/MiniShell.dir/build.make CMakeFiles/MiniShell.dir/src/Parser/main.c.i
-.PHONY : src/Parser/main.c.i
+src/Command/cmd.c.i:
+	$(MAKE) -f CMakeFiles/MiniShell.dir/build.make CMakeFiles/MiniShell.dir/src/Command/cmd.c.i
+.PHONY : src/Command/cmd.c.i
 
-src/Parser/main.s: src/Parser/main.c.s
+src/Command/cmd.s: src/Command/cmd.c.s
 
-.PHONY : src/Parser/main.s
+.PHONY : src/Command/cmd.s
 
 # target to generate assembly for a file
-src/Parser/main.c.s:
-	$(MAKE) -f CMakeFiles/MiniShell.dir/build.make CMakeFiles/MiniShell.dir/src/Parser/main.c.s
-.PHONY : src/Parser/main.c.s
+src/Command/cmd.c.s:
+	$(MAKE) -f CMakeFiles/MiniShell.dir/build.make CMakeFiles/MiniShell.dir/src/Command/cmd.c.s
+.PHONY : src/Command/cmd.c.s
 
 src/Parser/parser.tab.o: src/Parser/parser.tab.c.o
 
@@ -258,6 +231,33 @@ src/Parser/utils-lin.c.s:
 	$(MAKE) -f CMakeFiles/MiniShell.dir/build.make CMakeFiles/MiniShell.dir/src/Parser/utils-lin.c.s
 .PHONY : src/Parser/utils-lin.c.s
 
+src/main.o: src/main.c.o
+
+.PHONY : src/main.o
+
+# target to build an object file
+src/main.c.o:
+	$(MAKE) -f CMakeFiles/MiniShell.dir/build.make CMakeFiles/MiniShell.dir/src/main.c.o
+.PHONY : src/main.c.o
+
+src/main.i: src/main.c.i
+
+.PHONY : src/main.i
+
+# target to preprocess a source file
+src/main.c.i:
+	$(MAKE) -f CMakeFiles/MiniShell.dir/build.make CMakeFiles/MiniShell.dir/src/main.c.i
+.PHONY : src/main.c.i
+
+src/main.s: src/main.c.s
+
+.PHONY : src/main.s
+
+# target to generate assembly for a file
+src/main.c.s:
+	$(MAKE) -f CMakeFiles/MiniShell.dir/build.make CMakeFiles/MiniShell.dir/src/main.c.s
+.PHONY : src/main.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -267,12 +267,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... MiniShell"
-	@echo "... src/Parser/cmd.o"
-	@echo "... src/Parser/cmd.i"
-	@echo "... src/Parser/cmd.s"
-	@echo "... src/Parser/main.o"
-	@echo "... src/Parser/main.i"
-	@echo "... src/Parser/main.s"
+	@echo "... src/Command/cmd.o"
+	@echo "... src/Command/cmd.i"
+	@echo "... src/Command/cmd.s"
 	@echo "... src/Parser/parser.tab.o"
 	@echo "... src/Parser/parser.tab.i"
 	@echo "... src/Parser/parser.tab.s"
@@ -282,6 +279,9 @@ help:
 	@echo "... src/Parser/utils-lin.o"
 	@echo "... src/Parser/utils-lin.i"
 	@echo "... src/Parser/utils-lin.s"
+	@echo "... src/main.o"
+	@echo "... src/main.i"
+	@echo "... src/main.s"
 .PHONY : help
 
 

@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "utils.h"
+#include "../Parser/utils.h"
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
@@ -18,8 +18,8 @@
 #include <unistd.h>
 
 #include "cmd.h"
-#include "utils.h"
-#include "parser.h"
+#include "../Parser/utils.h"
+#include "../Parser/parser.h"
 
 #define READ		0
 #define WRITE		1

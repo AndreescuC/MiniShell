@@ -4,9 +4,9 @@ project(MiniShell C)
 set(CMAKE_C_STANDARD 99)
 
 set(SOURCE_FILES
-        src/Parser/main.c
-        src/Parser/cmd.c
-        src/Parser/cmd.h
+        src/main.c
+        src/Command/cmd.c
+        src/Command/cmd.h
         src/Parser/parser.h
         src/Parser/parser.tab.c
         src/Parser/parser.tab.h

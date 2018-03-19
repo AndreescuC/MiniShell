@@ -57,52 +57,52 @@ include CMakeFiles/MiniShell.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/MiniShell.dir/flags.make
 
-CMakeFiles/MiniShell.dir/src/Parser/main.c.o: CMakeFiles/MiniShell.dir/flags.make
-CMakeFiles/MiniShell.dir/src/Parser/main.c.o: ../src/Parser/main.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/cygdrive/y/SO/Tema2/Tema2-Implementation/MiniShell/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/MiniShell.dir/src/Parser/main.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/MiniShell.dir/src/Parser/main.c.o   -c /cygdrive/y/SO/Tema2/Tema2-Implementation/MiniShell/src/Parser/main.c
+CMakeFiles/MiniShell.dir/src/main.c.o: CMakeFiles/MiniShell.dir/flags.make
+CMakeFiles/MiniShell.dir/src/main.c.o: ../src/main.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/cygdrive/y/SO/Tema2/Tema2-Implementation/MiniShell/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/MiniShell.dir/src/main.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/MiniShell.dir/src/main.c.o   -c /cygdrive/y/SO/Tema2/Tema2-Implementation/MiniShell/src/main.c
 
-CMakeFiles/MiniShell.dir/src/Parser/main.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/MiniShell.dir/src/Parser/main.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /cygdrive/y/SO/Tema2/Tema2-Implementation/MiniShell/src/Parser/main.c > CMakeFiles/MiniShell.dir/src/Parser/main.c.i
+CMakeFiles/MiniShell.dir/src/main.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/MiniShell.dir/src/main.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /cygdrive/y/SO/Tema2/Tema2-Implementation/MiniShell/src/main.c > CMakeFiles/MiniShell.dir/src/main.c.i
 
-CMakeFiles/MiniShell.dir/src/Parser/main.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/MiniShell.dir/src/Parser/main.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /cygdrive/y/SO/Tema2/Tema2-Implementation/MiniShell/src/Parser/main.c -o CMakeFiles/MiniShell.dir/src/Parser/main.c.s
+CMakeFiles/MiniShell.dir/src/main.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/MiniShell.dir/src/main.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /cygdrive/y/SO/Tema2/Tema2-Implementation/MiniShell/src/main.c -o CMakeFiles/MiniShell.dir/src/main.c.s
 
-CMakeFiles/MiniShell.dir/src/Parser/main.c.o.requires:
+CMakeFiles/MiniShell.dir/src/main.c.o.requires:
 
-.PHONY : CMakeFiles/MiniShell.dir/src/Parser/main.c.o.requires
+.PHONY : CMakeFiles/MiniShell.dir/src/main.c.o.requires
 
-CMakeFiles/MiniShell.dir/src/Parser/main.c.o.provides: CMakeFiles/MiniShell.dir/src/Parser/main.c.o.requires
-	$(MAKE) -f CMakeFiles/MiniShell.dir/build.make CMakeFiles/MiniShell.dir/src/Parser/main.c.o.provides.build
-.PHONY : CMakeFiles/MiniShell.dir/src/Parser/main.c.o.provides
+CMakeFiles/MiniShell.dir/src/main.c.o.provides: CMakeFiles/MiniShell.dir/src/main.c.o.requires
+	$(MAKE) -f CMakeFiles/MiniShell.dir/build.make CMakeFiles/MiniShell.dir/src/main.c.o.provides.build
+.PHONY : CMakeFiles/MiniShell.dir/src/main.c.o.provides
 
-CMakeFiles/MiniShell.dir/src/Parser/main.c.o.provides.build: CMakeFiles/MiniShell.dir/src/Parser/main.c.o
+CMakeFiles/MiniShell.dir/src/main.c.o.provides.build: CMakeFiles/MiniShell.dir/src/main.c.o
 
 
-CMakeFiles/MiniShell.dir/src/Parser/cmd.c.o: CMakeFiles/MiniShell.dir/flags.make
-CMakeFiles/MiniShell.dir/src/Parser/cmd.c.o: ../src/Parser/cmd.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/cygdrive/y/SO/Tema2/Tema2-Implementation/MiniShell/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/MiniShell.dir/src/Parser/cmd.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/MiniShell.dir/src/Parser/cmd.c.o   -c /cygdrive/y/SO/Tema2/Tema2-Implementation/MiniShell/src/Parser/cmd.c
+CMakeFiles/MiniShell.dir/src/Command/cmd.c.o: CMakeFiles/MiniShell.dir/flags.make
+CMakeFiles/MiniShell.dir/src/Command/cmd.c.o: ../src/Command/cmd.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/cygdrive/y/SO/Tema2/Tema2-Implementation/MiniShell/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/MiniShell.dir/src/Command/cmd.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/MiniShell.dir/src/Command/cmd.c.o   -c /cygdrive/y/SO/Tema2/Tema2-Implementation/MiniShell/src/Command/cmd.c
 
-CMakeFiles/MiniShell.dir/src/Parser/cmd.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/MiniShell.dir/src/Parser/cmd.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /cygdrive/y/SO/Tema2/Tema2-Implementation/MiniShell/src/Parser/cmd.c > CMakeFiles/MiniShell.dir/src/Parser/cmd.c.i
+CMakeFiles/MiniShell.dir/src/Command/cmd.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/MiniShell.dir/src/Command/cmd.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /cygdrive/y/SO/Tema2/Tema2-Implementation/MiniShell/src/Command/cmd.c > CMakeFiles/MiniShell.dir/src/Command/cmd.c.i
 
-CMakeFiles/MiniShell.dir/src/Parser/cmd.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/MiniShell.dir/src/Parser/cmd.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /cygdrive/y/SO/Tema2/Tema2-Implementation/MiniShell/src/Parser/cmd.c -o CMakeFiles/MiniShell.dir/src/Parser/cmd.c.s
+CMakeFiles/MiniShell.dir/src/Command/cmd.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/MiniShell.dir/src/Command/cmd.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /cygdrive/y/SO/Tema2/Tema2-Implementation/MiniShell/src/Command/cmd.c -o CMakeFiles/MiniShell.dir/src/Command/cmd.c.s
 
-CMakeFiles/MiniShell.dir/src/Parser/cmd.c.o.requires:
+CMakeFiles/MiniShell.dir/src/Command/cmd.c.o.requires:
 
-.PHONY : CMakeFiles/MiniShell.dir/src/Parser/cmd.c.o.requires
+.PHONY : CMakeFiles/MiniShell.dir/src/Command/cmd.c.o.requires
 
-CMakeFiles/MiniShell.dir/src/Parser/cmd.c.o.provides: CMakeFiles/MiniShell.dir/src/Parser/cmd.c.o.requires
-	$(MAKE) -f CMakeFiles/MiniShell.dir/build.make CMakeFiles/MiniShell.dir/src/Parser/cmd.c.o.provides.build
-.PHONY : CMakeFiles/MiniShell.dir/src/Parser/cmd.c.o.provides
+CMakeFiles/MiniShell.dir/src/Command/cmd.c.o.provides: CMakeFiles/MiniShell.dir/src/Command/cmd.c.o.requires
+	$(MAKE) -f CMakeFiles/MiniShell.dir/build.make CMakeFiles/MiniShell.dir/src/Command/cmd.c.o.provides.build
+.PHONY : CMakeFiles/MiniShell.dir/src/Command/cmd.c.o.provides
 
-CMakeFiles/MiniShell.dir/src/Parser/cmd.c.o.provides.build: CMakeFiles/MiniShell.dir/src/Parser/cmd.c.o
+CMakeFiles/MiniShell.dir/src/Command/cmd.c.o.provides.build: CMakeFiles/MiniShell.dir/src/Command/cmd.c.o
 
 
 CMakeFiles/MiniShell.dir/src/Parser/parser.tab.c.o: CMakeFiles/MiniShell.dir/flags.make
@@ -179,8 +179,8 @@ CMakeFiles/MiniShell.dir/src/Parser/parser.yy.c.o.provides.build: CMakeFiles/Min
 
 # Object files for target MiniShell
 MiniShell_OBJECTS = \
-"CMakeFiles/MiniShell.dir/src/Parser/main.c.o" \
-"CMakeFiles/MiniShell.dir/src/Parser/cmd.c.o" \
+"CMakeFiles/MiniShell.dir/src/main.c.o" \
+"CMakeFiles/MiniShell.dir/src/Command/cmd.c.o" \
 "CMakeFiles/MiniShell.dir/src/Parser/parser.tab.c.o" \
 "CMakeFiles/MiniShell.dir/src/Parser/utils-lin.c.o" \
 "CMakeFiles/MiniShell.dir/src/Parser/parser.yy.c.o"
@@ -188,8 +188,8 @@ MiniShell_OBJECTS = \
 # External object files for target MiniShell
 MiniShell_EXTERNAL_OBJECTS =
 
-MiniShell.exe: CMakeFiles/MiniShell.dir/src/Parser/main.c.o
-MiniShell.exe: CMakeFiles/MiniShell.dir/src/Parser/cmd.c.o
+MiniShell.exe: CMakeFiles/MiniShell.dir/src/main.c.o
+MiniShell.exe: CMakeFiles/MiniShell.dir/src/Command/cmd.c.o
 MiniShell.exe: CMakeFiles/MiniShell.dir/src/Parser/parser.tab.c.o
 MiniShell.exe: CMakeFiles/MiniShell.dir/src/Parser/utils-lin.c.o
 MiniShell.exe: CMakeFiles/MiniShell.dir/src/Parser/parser.yy.c.o
@@ -203,8 +203,8 @@ CMakeFiles/MiniShell.dir/build: MiniShell.exe
 
 .PHONY : CMakeFiles/MiniShell.dir/build
 
-CMakeFiles/MiniShell.dir/requires: CMakeFiles/MiniShell.dir/src/Parser/main.c.o.requires
-CMakeFiles/MiniShell.dir/requires: CMakeFiles/MiniShell.dir/src/Parser/cmd.c.o.requires
+CMakeFiles/MiniShell.dir/requires: CMakeFiles/MiniShell.dir/src/main.c.o.requires
+CMakeFiles/MiniShell.dir/requires: CMakeFiles/MiniShell.dir/src/Command/cmd.c.o.requires
 CMakeFiles/MiniShell.dir/requires: CMakeFiles/MiniShell.dir/src/Parser/parser.tab.c.o.requires
 CMakeFiles/MiniShell.dir/requires: CMakeFiles/MiniShell.dir/src/Parser/utils-lin.c.o.requires
 CMakeFiles/MiniShell.dir/requires: CMakeFiles/MiniShell.dir/src/Parser/parser.yy.c.o.requires

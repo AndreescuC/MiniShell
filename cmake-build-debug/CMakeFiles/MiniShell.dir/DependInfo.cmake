@@ -4,11 +4,11 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/cygdrive/y/SO/Tema2/Tema2-Implementation/MiniShell/src/Parser/cmd.c" "/cygdrive/y/SO/Tema2/Tema2-Implementation/MiniShell/cmake-build-debug/CMakeFiles/MiniShell.dir/src/Parser/cmd.c.o"
-  "/cygdrive/y/SO/Tema2/Tema2-Implementation/MiniShell/src/Parser/main.c" "/cygdrive/y/SO/Tema2/Tema2-Implementation/MiniShell/cmake-build-debug/CMakeFiles/MiniShell.dir/src/Parser/main.c.o"
+  "/cygdrive/y/SO/Tema2/Tema2-Implementation/MiniShell/src/Command/cmd.c" "/cygdrive/y/SO/Tema2/Tema2-Implementation/MiniShell/cmake-build-debug/CMakeFiles/MiniShell.dir/src/Command/cmd.c.o"
   "/cygdrive/y/SO/Tema2/Tema2-Implementation/MiniShell/src/Parser/parser.tab.c" "/cygdrive/y/SO/Tema2/Tema2-Implementation/MiniShell/cmake-build-debug/CMakeFiles/MiniShell.dir/src/Parser/parser.tab.c.o"
   "/cygdrive/y/SO/Tema2/Tema2-Implementation/MiniShell/src/Parser/parser.yy.c" "/cygdrive/y/SO/Tema2/Tema2-Implementation/MiniShell/cmake-build-debug/CMakeFiles/MiniShell.dir/src/Parser/parser.yy.c.o"
   "/cygdrive/y/SO/Tema2/Tema2-Implementation/MiniShell/src/Parser/utils-lin.c" "/cygdrive/y/SO/Tema2/Tema2-Implementation/MiniShell/cmake-build-debug/CMakeFiles/MiniShell.dir/src/Parser/utils-lin.c.o"
+  "/cygdrive/y/SO/Tema2/Tema2-Implementation/MiniShell/src/main.c" "/cygdrive/y/SO/Tema2/Tema2-Implementation/MiniShell/cmake-build-debug/CMakeFiles/MiniShell.dir/src/main.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 
