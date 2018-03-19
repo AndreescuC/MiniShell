@@ -83,16 +83,31 @@ static int parse_simple(simple_command_t *s, int level, command_t *father)
 				i++;
 			}
 			argvec[i] = NULL;
+            if (s->out != NULL && strlen(s->out->string)) {
+                int fd_out = open(s->out->string, O_RDWR | O_CREAT | O_TRUNC, 0777);
+                dup2(fd_out, STDOUT_FILENO);
+                close(fd_out);
+            }
+            if (s->in != NULL && strlen(s->in->string)) {
+                int fd_in = open(s->in->string, O_RDWR | O_CREAT, 0777);
+                dup2(fd_in, STDIN_FILENO);
+                close(fd_in);
+            }
+			if (s->err != NULL && strlen(s->err->string)) {
+				int fd_err = open(s->err->string, O_RDWR | O_CREAT | O_TRUNC, 0777);
+				dup2(fd_err, STDERR_FILENO);
+				close(fd_err);
+			}
 			execvp(s->verb->string, argvec);
 			break;
 		default:
 			break;
 	}
 	waitpid(child_pid, &status, 0);
-	if (WIFEXITED(status))
+	/*if (WIFEXITED(status))
 		printf("Child %d terminated normally, with code %d\n",
 			   child_pid, WEXITSTATUS(status));
-
+*/
 	return status;
 }
 

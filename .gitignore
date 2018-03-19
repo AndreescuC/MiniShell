@@ -6,3 +6,7 @@
 #Ignoring cmake related files
 / cmake-build-debug
 cmake-build-debug/
+
+#Ignoring checker did
+/ checker
+checker/
