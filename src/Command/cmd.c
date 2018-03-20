@@ -52,6 +52,10 @@ static int parse_simple(simple_command_t *s, int level, command_t *father)
         return shell_exit();
     }
 	int status = -99, j, argc, reallocation_increment;
+    if (strcmp(s->verb->string, "cd") == 0) {
+        status = chdir(s->params->string);
+        return status;
+    }
 	pid_t child_pid = fork();
 
 	switch (child_pid) {
@@ -65,10 +69,10 @@ static int parse_simple(simple_command_t *s, int level, command_t *father)
 			for (j=0; j<argc; j++) {
 				argvec[j] = (char*)malloc(20 * sizeof(char));
 			}
-			strcpy(argvec[0], s->verb->string);
+            strcpy(argvec[0], s->verb->string);
 
-			int i = 1;
-			word_t *puppet;
+            int i = 1;
+            word_t *puppet;
 			puppet = s->params;
 			while (puppet != NULL) {
 				if (i >= argc) {
@@ -83,31 +87,47 @@ static int parse_simple(simple_command_t *s, int level, command_t *father)
 				i++;
 			}
 			argvec[i] = NULL;
-            if (s->out != NULL && strlen(s->out->string)) {
-                int fd_out = open(s->out->string, O_RDWR | O_CREAT | O_TRUNC, 0777);
-                dup2(fd_out, STDOUT_FILENO);
-                close(fd_out);
-            }
+            int mode;
             if (s->in != NULL && strlen(s->in->string)) {
                 int fd_in = open(s->in->string, O_RDWR | O_CREAT, 0777);
                 dup2(fd_in, STDIN_FILENO);
                 close(fd_in);
             }
-			if (s->err != NULL && strlen(s->err->string)) {
-				int fd_err = open(s->err->string, O_RDWR | O_CREAT | O_TRUNC, 0777);
-				dup2(fd_err, STDERR_FILENO);
-				close(fd_err);
-			}
+            if (s->out != NULL && strlen(s->out->string) &&
+                    s->err != NULL && strlen(s->err->string)) {
+
+                mode = O_RDWR | O_CREAT | O_TRUNC;
+                int fd_out_err = open(s->out->string, mode, 0777);
+                dup2(fd_out_err, STDOUT_FILENO);
+                dup2(fd_out_err, STDERR_FILENO);
+                close(fd_out_err);
+            } else {
+
+                if (s->out != NULL && strlen(s->out->string)) {
+                    mode = O_RDWR | O_CREAT;
+                    mode |= s->io_flags == IO_OUT_APPEND ? O_APPEND : O_TRUNC;
+                    int fd_out = open(s->out->string, mode, 0777);
+                    dup2(fd_out, STDOUT_FILENO);
+                    close(fd_out);
+                }
+                if (s->err != NULL && strlen(s->err->string)) {
+                    mode = O_RDWR | O_CREAT;
+                    mode |= s->io_flags == IO_ERR_APPEND ? O_APPEND : O_TRUNC;
+                    int fd_err = open(s->err->string, mode, 0777);
+                    dup2(fd_err, STDERR_FILENO);
+                    close(fd_err);
+                }
+            }
 			execvp(s->verb->string, argvec);
 			break;
 		default:
 			break;
 	}
 	waitpid(child_pid, &status, 0);
-	/*if (WIFEXITED(status))
-		printf("Child %d terminated normally, with code %d\n",
-			   child_pid, WEXITSTATUS(status));
-*/
+//	if (WIFEXITED(status))
+//		printf("Child %d terminated normally, with code %d\n",
+//			   child_pid, WEXITSTATUS(status));
+
 	return status;
 }
 
