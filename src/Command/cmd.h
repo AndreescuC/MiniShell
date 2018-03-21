@@ -8,6 +8,7 @@
 #include "../Parser/parser.h"
 
 #define SHELL_EXIT -100
+#define DEFAULT_STATUS -99
 
 /**
  * Parse and execute a command.
