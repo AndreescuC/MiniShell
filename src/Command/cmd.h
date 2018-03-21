@@ -9,6 +9,7 @@
 
 #define SHELL_EXIT -100
 #define DEFAULT_STATUS -99
+#define FAILED_CHILD 0b10101010
 
 /**
  * Parse and execute a command.
