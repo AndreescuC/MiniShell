@@ -16,5 +16,6 @@
  */
 int parse_command(command_t *cmd, int level, command_t *father);
 static int do_redirects(simple_command_t *s, int *saved_stdout, int *saved_stdin, int *saved_stderr);
+static int parse_simple(simple_command_t *s, int level, command_t *father);
 
 #endif /* _CMD_H */

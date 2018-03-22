@@ -167,10 +167,15 @@ static int do_on_pipe(command_t *cmd1, command_t *cmd2, int level,
                       command_t *father)
 {
 
+    int saved_stdout = DEFAULT_STATUS;
+    int saved_stdin = DEFAULT_STATUS;
+    int saved_stderr = DEFAULT_STATUS;
+    int saved_stdin_pipe = DEFAULT_STATUS;
+
     int status = check_basic(cmd1->scmd, "");
     if (status == DEFAULT_STATUS) {
 
-        int pipe_obj[2];
+        int pipe_obj[2], j;
         pipe(pipe_obj);
 
         pid_t child_pid = fork();
@@ -185,52 +190,43 @@ static int do_on_pipe(command_t *cmd1, command_t *cmd2, int level,
                 int argc;
                 char **argvec = get_argv(cmd1->scmd, &argc);
 
+                do_redirects(cmd1->scmd, &saved_stdout, &saved_stdin, &saved_stderr);
+
                 execvp(cmd1->scmd->verb->string, argvec);
                 printf("Execution failed for '%s'\n", cmd1->scmd->verb->string);
                 exit(FAILED_CHILD);
             default:
                 break;
         }
-        char buffer[50];
-        char whole_input[500] = "";
-        ssize_t nbytes;
-        nbytes = read(STDIN_FILENO, buffer, sizeof(buffer));
-        strcpy(whole_input, buffer);
-        if (whole_input[strlen(whole_input)-1] == '\n'
-            || whole_input[strlen(whole_input)-1] == '\r')
-            whole_input[strlen(whole_input)-1] = '\0';
+        waitpid(child_pid, &status, 0);
 
-        status = check_basic(cmd2->scmd, whole_input);
+        saved_stdin_pipe = dup(STDIN_FILENO);
+        close(pipe_obj[1]);
+        dup2(pipe_obj[0], STDIN_FILENO);
+        close(pipe_obj[0]);
+
+        status = check_basic(cmd2->scmd, "");
         if (status != DEFAULT_STATUS) {
             return status;
         }
-
-        pid_t child_pid1 = fork();
-        switch (child_pid1) {
+        char **argvec;
+        child_pid = fork();
+        switch (child_pid) {
             case -1:
-                DIE(child_pid1, "fork");
+                DIE(child_pid, "fork");
             case 0:
-                close(pipe_obj[1]);
-                dup2(pipe_obj[0], STDIN_FILENO);
-                close(pipe_obj[0]);
 
-                nbytes = read(STDIN_FILENO, buffer, sizeof(buffer));
-                strcpy(whole_input, buffer);
-
-                if (whole_input[strlen(whole_input)-1] == '\n'
-                    || whole_input[strlen(whole_input)-1] == '\r')
-                    whole_input[strlen(whole_input)-1] = '\0';
-
-                int j;
-                char **argvec;
-                argvec = (char**)malloc(3 * sizeof(char*));
-                for (j=0; j<3; j++) {
-                    argvec[j] = (char*)malloc(500 * sizeof(char));
+                argvec = (char**)malloc(2 * sizeof(char*));
+                for (j=0; j<2; j++) {
+                    argvec[j] = (char*)malloc(50 * sizeof(char));
                 }
-                strcpy(argvec[0], cmd2->scmd->verb->string);
-                strcpy(argvec[1], whole_input);
-                argvec[2] = NULL;
 
+                do_redirects(cmd2->scmd, &saved_stdout, &saved_stdin, &saved_stderr);
+
+                strcpy(argvec[0], cmd2->scmd->verb->string);
+                //strcpy(argvec[1], whole_input);
+                argvec[1] = NULL;
+                //printf("Cmd2:%s %s|\n", argvec[0], argvec[1]);
                 execvp(cmd2->scmd->verb->string, argvec);
 
                 printf("Execution failed for '%s'\n", cmd1->scmd->verb->string);
@@ -238,10 +234,14 @@ static int do_on_pipe(command_t *cmd1, command_t *cmd2, int level,
             default:
                 break;
         }
-        waitpid(child_pid1, &status, 0);
+        waitpid(child_pid, &status, 0);
+        dup2(saved_stdin_pipe, STDIN_FILENO);
+        close(saved_stdin_pipe);
         return WIFEXITED(status) != 0
                ? (WEXITSTATUS(status) == FAILED_CHILD ? 0 : 1)
                : 0;
+    } else {
+        return parse_simple(cmd2->scmd, 1, cmd2);
     }
 
 }
@@ -268,12 +268,9 @@ static int parse_simple(simple_command_t *s, int level, command_t *father)
 		case -1:
 			DIE(child_pid, "fork");
 		case 0:
-
             argvec = get_argv(s, &argc);
-
-			do_redirects(s, &saved_stdout, &saved_stdin, &saved_stderr);
-
-			execvp(s->verb->string, argvec);
+            do_redirects(s, &saved_stdout, &saved_stdin, &saved_stderr);
+            execvp(s->verb->string, argvec);
             printf("Execution failed for '%s'\n", s->verb->string);
             exit(FAILED_CHILD);
 		default:
@@ -341,8 +338,7 @@ int parse_command(command_t *c, int level, command_t *father)
         break;
 
 	case OP_PIPE:
-        do_on_pipe(c->cmd1, c->cmd2, 1, c);
-		break;
+        return do_on_pipe(c->cmd1, c->cmd2, 1, c);
 
 	default:
 		return SHELL_EXIT;
