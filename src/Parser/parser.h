@@ -172,6 +172,7 @@ typedef struct command_t {
 	struct command_t *up;
 	struct command_t *cmd1;
 	struct command_t *cmd2;
+	struct command_t *list_next;
 	operator_t op;
 	simple_command_t *scmd;
 	void *aux;

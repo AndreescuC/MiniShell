@@ -222,11 +222,8 @@ static int do_on_pipe(command_t *cmd1, command_t *cmd2, int level,
                 }
 
                 do_redirects(cmd2->scmd, &saved_stdout, &saved_stdin, &saved_stderr);
-
-                strcpy(argvec[0], cmd2->scmd->verb->string);
-                //strcpy(argvec[1], whole_input);
-                argvec[1] = NULL;
-                //printf("Cmd2:%s %s|\n", argvec[0], argvec[1]);
+                int size;
+                argvec = get_argv(cmd2->scmd, &size);
                 execvp(cmd2->scmd->verb->string, argvec);
 
                 printf("Execution failed for '%s'\n", cmd1->scmd->verb->string);
@@ -244,6 +241,52 @@ static int do_on_pipe(command_t *cmd1, command_t *cmd2, int level,
         return parse_simple(cmd2->scmd, 1, cmd2);
     }
 
+}
+
+static int run_on_pipe(simple_command_t *s, int prev_pipe[2], int next_pipe[2], bool stdin_flag,
+                       bool stdout_flag) {
+
+    int saved_stdout, saved_stdin, saved_stderr;
+    saved_stdin = saved_stdout = saved_stderr = DEFAULT_STATUS;
+    int status = check_basic(s, "");
+    if (status != DEFAULT_STATUS) {
+        return status;
+    }
+    pid_t child_pid = fork();
+    switch (child_pid) {
+        case -1:
+            DIE(child_pid, "fork");
+        case 0:
+
+            if (stdin_flag == true) {
+                dup2(prev_pipe[0], STDIN_FILENO);
+                close(prev_pipe[1]);
+                close(prev_pipe[0]);
+            }
+
+            if (stdout_flag == true) {
+                dup2(next_pipe[1], STDOUT_FILENO);
+                close(next_pipe[0]);
+                close(next_pipe[1]);
+            }
+
+            int argc;
+            char **argvec = get_argv(s, &argc);
+            do_redirects(s, &saved_stdout, &saved_stdin, &saved_stderr);
+            execvp(s->verb->string, argvec);
+            printf("Execution failed for '%s'\n", s->verb->string);
+            exit(FAILED_CHILD);
+        default:
+            break;
+    }
+    if (stdin_flag == true) {
+        close(prev_pipe[0]);
+        close(prev_pipe[1]);
+    }
+    waitpid(child_pid, &status, 0);
+    return WIFEXITED(status) != 0
+           ? (WEXITSTATUS(status) == FAILED_CHILD ? 0 : 1)
+           : 0;
 }
 
 /**
@@ -300,6 +343,47 @@ int handle_command(command_t *c)
            : parse_simple(c->scmd, 1, c->up);
 }
 
+command_t* dfs_in_order(command_t *c, int *pipeSize)
+{
+    int leftTreeSize = 0, rightTreeSize = 0;
+    if (c->scmd != NULL) {
+        *pipeSize = 1;
+        return c;
+    }
+    command_t* c1 = dfs_in_order(c->cmd1, &leftTreeSize);
+    command_t* puppet = c1;
+    command_t* c2 = dfs_in_order(c->cmd2, &rightTreeSize);
+    while (puppet->list_next != NULL) {
+        puppet = puppet->list_next;
+    }
+    puppet->list_next = c2;
+    *pipeSize = leftTreeSize + rightTreeSize;
+    return c1;
+}
+
+int handle_pipe(command_t *c)
+{
+    int  index = 0, i, pipeSize = 0;
+    command_t* puppet = dfs_in_order(c, &pipeSize);
+    pipeSize ++;
+    int pipes[pipeSize][2];
+    for (i=0; i<pipeSize; i++) {
+        pipe(pipes[i]);
+    }
+    run_on_pipe(puppet->scmd, pipes[index], pipes[index+1], false, true);
+    index ++;
+    puppet = puppet->list_next;
+    while (puppet->list_next != NULL) {
+        run_on_pipe(puppet->scmd, pipes[index], pipes[index+1], true, true);
+        puppet = puppet->list_next;
+        index ++;
+    }
+    int status = run_on_pipe(puppet->scmd, pipes[index], pipes[index+1], true, false);
+
+    return status;
+}
+
+
 /**
  * Parse and execute a command.
  */
@@ -338,7 +422,7 @@ int parse_command(command_t *c, int level, command_t *father)
         break;
 
 	case OP_PIPE:
-        return do_on_pipe(c->cmd1, c->cmd2, 1, c);
+        return handle_pipe(c);
 
 	default:
 		return SHELL_EXIT;

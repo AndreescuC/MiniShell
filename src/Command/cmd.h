@@ -17,5 +17,6 @@
 int parse_command(command_t *cmd, int level, command_t *father);
 static int do_redirects(simple_command_t *s, int *saved_stdout, int *saved_stdin, int *saved_stderr);
 static int parse_simple(simple_command_t *s, int level, command_t *father);
+static int run_on_pipe(simple_command_t *s,int* prev_pipe, int* next_pipe, bool stdin_flag, bool stdout_flag);
 
 #endif /* _CMD_H */
