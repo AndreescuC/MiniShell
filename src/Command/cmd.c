@@ -63,6 +63,29 @@ static int shell_exit(void)
     return SHELL_EXIT;
 }
 
+const char* get_full_name(word_t* value)
+{
+    if (value->next_part == NULL) {
+        return value->string;
+    }
+    char *buff;
+    buff = malloc(50);
+    word_t* puppet = value;
+    while (puppet != NULL) {
+        if (strlen(puppet->string)) {
+            if (puppet->expand == true) {
+                if (getenv(puppet->string) != NULL) {
+                    strcat(buff, getenv(puppet->string));
+                }
+            } else {
+                strcat(buff, puppet->string);
+            }
+        }
+        puppet=puppet->next_part;
+    }
+    return buff;
+}
+
 /**
  * Checks in command if redirects are necessary and performs
  * @param s
@@ -75,7 +98,9 @@ static int do_redirects(simple_command_t *s, int *saved_stdout, int *saved_stdin
 {
 	int mode;
 	if (s->in != NULL && strlen(s->in->string)) {
-		int fd_in = open(s->in->string, O_RDWR | O_CREAT, 0777);
+        char fullName[50] = "";
+        strcpy(fullName, get_full_name(s->in));
+		int fd_in = open(fullName, O_RDWR | O_CREAT, 0777);
 		*saved_stdin = dup(STDIN_FILENO);
 		dup2(fd_in, STDIN_FILENO);
 		close(fd_in);
@@ -85,7 +110,9 @@ static int do_redirects(simple_command_t *s, int *saved_stdout, int *saved_stdin
         strcmp(s->out->string, s->err->string) == 0) {
 
 		mode = O_RDWR | O_CREAT | O_TRUNC;
-		int fd_out_err = open(s->out->string, mode, 0777);
+        char fullName[50] = "";
+        strcpy(fullName, get_full_name(s->out));
+		int fd_out_err = open(fullName, mode, 0777);
 		*saved_stdout = dup(STDOUT_FILENO);
 		*saved_stderr = dup(STDERR_FILENO);
 		dup2(fd_out_err, STDOUT_FILENO);
@@ -96,7 +123,9 @@ static int do_redirects(simple_command_t *s, int *saved_stdout, int *saved_stdin
 		if (s->out != NULL && strlen(s->out->string)) {
 			mode = O_RDWR | O_CREAT;
 			mode |= s->io_flags == IO_OUT_APPEND ? O_APPEND : O_TRUNC;
-			int fd_out = open(s->out->string, mode, 0777);
+            char fullName[50] = "";
+            strcpy(fullName, get_full_name(s->out));
+			int fd_out = open(fullName, mode, 0777);
 			*saved_stdout = dup(STDOUT_FILENO);
 			dup2(fd_out, STDOUT_FILENO);
 			close(fd_out);
@@ -104,7 +133,9 @@ static int do_redirects(simple_command_t *s, int *saved_stdout, int *saved_stdin
 		if (s->err != NULL && strlen(s->err->string)) {
 			mode = O_RDWR | O_CREAT;
 			mode |= s->io_flags == IO_ERR_APPEND ? O_APPEND : O_TRUNC;
-			int fd_err = open(s->err->string, mode, 0777);
+            char fullName[50] = "";
+            strcpy(fullName, get_full_name(s->err));
+			int fd_err = open(fullName, mode, 0777);
 			*saved_stderr = dup(STDERR_FILENO);
 			dup2(fd_err, STDERR_FILENO);
 			close(fd_err);
@@ -119,7 +150,9 @@ static int assign_env_var(const char *name, word_t* value, int overwrite)
 	while (puppet != NULL) {
 		if (strlen(puppet->string)) {
             if (puppet->expand == true) {
-                strcat(buff, getenv(puppet->string));
+                if (getenv(puppet->string) != NULL) {
+                    strcat(buff, getenv(puppet->string));
+                }
             } else {
                 strcat(buff, puppet->string);
             }
@@ -305,7 +338,6 @@ static int parse_simple(simple_command_t *s, int level, command_t *father)
     if (status != DEFAULT_STATUS) {
         return status;
     }
-
 	pid_t child_pid = fork();
 	switch (child_pid) {
 		case -1:
@@ -320,20 +352,48 @@ static int parse_simple(simple_command_t *s, int level, command_t *father)
 			break;
 	}
     waitpid(child_pid, &status, 0);
-    return WIFEXITED(status) != 0
-           ? (WEXITSTATUS(status) == FAILED_CHILD ? 0 : 1)
+    return status == 0
+           ? (WIFEXITED(status) != 0
+              ? (WEXITSTATUS(status) == FAILED_CHILD
+                 ? 0
+                 : 1)
+              : 0)
            : 0;
 }
 
 /**
  * Process two commands in parallel, by creating two children.
  */
-static bool do_in_parallel(command_t *cmd1, command_t *cmd2, int level,
+static int do_in_parallel(command_t *cmd1, command_t *cmd2, int level,
 		command_t *father)
 {
-	/* TODO execute cmd1 and cmd2 simultaneously */
 
-	return true; /* TODO replace with actual exit status */
+    int status1, status2;
+    pid_t second_child_pid;
+    pid_t child_pid = fork();
+
+    switch (child_pid) {
+        case -1:
+            DIE(child_pid, "fork");
+        case 0:
+            parse_command(cmd1, ++level, cmd1->up);
+        default:
+            second_child_pid = fork();
+            if(second_child_pid == 0) {
+                parse_command(cmd2, ++level, cmd2->up);
+            } else {
+//                waitpid(child_pid, &status2, 0);
+//                waitpid(second_child_pid, &status1, 0);
+//                status1 = WIFEXITED(status1) != 0
+//                          ? (WEXITSTATUS(status1) == FAILED_CHILD ? 0 : 1)
+//                          : 0;
+//                status2 = WIFEXITED(status2) != 0
+//                          ? (WEXITSTATUS(status2) == FAILED_CHILD ? 0 : 1)
+//                          : 0;
+                return 1;//status1 * status2 == 0 ? 0 : 1;
+            }
+            break;
+    }
 }
 
 int handle_command(command_t *c)
@@ -402,7 +462,7 @@ int parse_command(command_t *c, int level, command_t *father)
 		break;
 
 	case OP_PARALLEL:
-		/* TODO execute the commands simultaneously */
+		do_in_parallel(c->cmd1, c->cmd2, 1, c);
 		break;
 
 	case OP_CONDITIONAL_NZERO:
